@@ -1,0 +1,29 @@
+Battery,Ah,Mass (g),,Propellor,Mass (g),Amps,Thrust (g),,Dual EDF,Mass (g),Amps,Thrust (g),,Single EDF,Mass (g),Amps,Thrust (g)
+Liperior,1,197,,CRM2204 1400KV,58,20,880,,XQ-Motor,152,44,1440,,XQ-Motor,76,22,720
+Liperior,1.6,251,,CRM2208 1600KV,124,39.8,1498,,XQ-Motor,152,68,1840,,XQ-Motor,76,34,920
+Liperior,2.2,352,,CRM2212 1400KV,150,44.2,1642,,Freewing,460,180,4200,,Freewing,230,90,2100
+Liperior,3.3,487,,CRM2413 1300KV,170,39.1,1696,,JP Hobby,466,144.6,4220,,JP Hobby,233,72.3,2110
+Liperior,4,587.4,,MAD 6X12 Pro,1306,60,7500,,JP Hobby,524,180,5800,,JP Hobby,262,90,2900
+Liperior,5,718,,UAV AG drone motor,2190,200,40000,,JP Hobby,910,200,10704,,JP Hobby,455,100,5352
+Liperior,6,880,,,,,,,JP Hobby,980,220,8260,,JP Hobby,490,110,4130
+Liperior,8.1,930,,,,,,,JP Hobby,970,234,6940,,JP Hobby,485,117,3470
+,,,,,,,,,JP Hobby,1100,234,12400,,JP Hobby,550,117,6200
+Liperior,3.3,416,,,,,,,JP Hobby,1400,223,15000,,JP Hobby,700,111.5,7500
+Liperior,4,514,,,,,,,,,,,,,,,
+Liperior,5,617,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+LiperiAir,0.55,57,,,,,,,,,,,,,,,
+LiperiAir,1.35,154,,,,,,,,,,,,,,,
+Liperior,2.2,229,,,,,,,,,,,,,,,
+Liperior,3.3,327,,,,,,,,,,,,,,,
+Liperior,4,408.9,,,,,,,,,,,,,,,
+Liperior,5,529,,,,,,,,,,,,,,,
+Liperior,6,667,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+Liperior,0.65,58,,,,,,,,,,,,,,,
+Liperior,1,107,,,,,,,,,,,,,,,
+Liperior,2.2,179,,,,,,,,,,,,,,,
+Liperior,3.3,252,,,,,,,,,,,,,,,
+Liperior,4,324,,,,,,,,,,,,,,,
+Liperior,5,375,,,,,,,,,,,,,,,
+LiperiAir,6,459,,,,,,,,,,,,,,,
