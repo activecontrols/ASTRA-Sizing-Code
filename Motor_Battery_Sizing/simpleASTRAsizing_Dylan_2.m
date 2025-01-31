@@ -21,10 +21,13 @@ propeller_vals = propeller_vals{:,:};
 single_edf_vals = data_file(:,{'Mass_g__3','Amps_2','Thrust_g__2','Voltage_3'});
 single_edf_vals = single_edf_vals{:,:};
 
+% Dual EDF Values
+dual_edf_vals = data_file(:,{'Mass_g__2','Amps_1','Thrust_g__1','Voltage_2'});
+dual_edf_vals = dual_edf_vals{:,:};
 
 %calcVals(propeller_vals,batt_vals)
 calcVals(single_edf_vals,batt_vals)
-
+calcVals(dual_edf_vals,batt_vals)
 
 
 
@@ -57,7 +60,7 @@ function calcVals(propulsion,batt)
             if((3>=batt_volt(batt_num)-prop_volt(fan_num)) && (batt_volt(batt_num)-prop_volt(fan_num)>=0))
                 % Calculate Values
                 twr = prop_thrust(fan_num)/(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Propuslion Stack TWR
-                flt_time = batt_Ah(batt_num)*(1-batt_margin)*1200/prop_amps(fan_num); % Calculate flight time assuming max draw with 20% reserve
+                flt_time = batt_Ah(batt_num)*(1-batt_margin)*3600/prop_amps(fan_num); % Calculate flight time assuming max draw with 20% reserve
                 payload = (prop_thrust(fan_num)/twr_target)-(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Paload Capacity using target twr
                 
                 % Update Arrays
