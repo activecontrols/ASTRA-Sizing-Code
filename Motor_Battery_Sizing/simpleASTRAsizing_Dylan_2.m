@@ -1,12 +1,7 @@
 clear
 close all
 
-twr_target = 1.7/1.6; % TWR, currently set to gyruruereee's for testing purposes
-g = 9.8; % gravity
-
-mass_structure = 3.5;
-batt_margin = 0.2;
-
+% Load Specs
 data_file = readtable("Matlab Simple Sizing2.csv");
 
 % Battery Values
@@ -25,16 +20,15 @@ single_edf_vals = single_edf_vals{:,:};
 dual_edf_vals = data_file(:,{'Mass_g__2','Amps_1','Thrust_g__1','Voltage_2'});
 dual_edf_vals = dual_edf_vals{:,:};
 
-%calcVals(propeller_vals,batt_vals)
+% Run Visualizer
+calcVals(propeller_vals,batt_vals)
 calcVals(single_edf_vals,batt_vals)
 calcVals(dual_edf_vals,batt_vals)
 
-
-
 function calcVals(propulsion,batt)
     % Settings
-    twr_target = 1.7/1.6;
-    batt_margin = 0.2;
+    twr_target = 1.7/1.6; % TWR, currently set to gyruruereee's for testing purposes
+    batt_margin = 0.2; % Percentage battery charge to leave in reserve
 
     % Propulsion Device    
     prop_mass = propulsion(:,1); % Motor Mass in kg
@@ -49,19 +43,22 @@ function calcVals(propulsion,batt)
     batt_volt = batt(:,3); % Battery Voltages in V
     batt_count = length(batt_Ah);
     
-    twr_vals = zeros(prop_count,length(batt_Ah));
-    flt_time_vals = zeros(prop_count,length(batt_Ah));
-    payload_vals = zeros(prop_count,length(batt_Ah));
-    score = zeros(prop_count,length(batt_Ah));
-    score2 = zeros(prop_count,length(batt_Ah));
+    twr_vals = zeros(prop_count,batt_count);
+    flt_time_vals = zeros(prop_count,batt_count);
+    payload_vals = zeros(prop_count,batt_count);
+    score = zeros(prop_count,batt_count);
+    score2 = zeros(prop_count,batt_count);
     
     for fan_num = 1:prop_count
-        for batt_num = 1:length(batt_Ah)
-            if((3>=batt_volt(batt_num)-prop_volt(fan_num)) && (batt_volt(batt_num)-prop_volt(fan_num)>=0))
-                % Calculate Values
-                twr = prop_thrust(fan_num)/(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Propuslion Stack TWR
-                flt_time = batt_Ah(batt_num)*(1-batt_margin)*3600/prop_amps(fan_num); % Calculate flight time assuming max draw with 20% reserve
-                payload = (prop_thrust(fan_num)/twr_target)-(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Paload Capacity using target twr
+        for batt_num = 1:batt_count
+
+            % Calculate Values
+            twr = prop_thrust(fan_num)/(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Propuslion Stack TWR
+            flt_time = batt_Ah(batt_num)*(1-batt_margin)*3600/prop_amps(fan_num); % Calculate flight time assuming max draw with 20% reserve
+            payload = (prop_thrust(fan_num)/twr_target)-(prop_mass(fan_num)+mass_battery(batt_num)); % Calculate Paload Capacity using target twr
+            voltage_diff = batt_volt(batt_num)-prop_volt(fan_num); % Difference between Battery and Motor Voltage
+            
+            if((3>=voltage_diff) && (voltage_diff>=0) && flt_time >= 90)
                 
                 % Update Arrays
                 twr_vals(fan_num,batt_num) = twr;
@@ -71,48 +68,35 @@ function calcVals(propulsion,batt)
                 score2(fan_num,batt_num) = payload*flt_time;
             
             end
+            
         end
     end
-    
-    score = clearZeros(score);
 
-    %figure()
+    figure()
     subplot(2,3,1)
     surf(score)
     xlabel("batt")
     ylabel("fan")
     zlabel("twr * flt time")
     
-    score2 = clearZeros(score2);
-
-    %figure()
     subplot(2,3,2)
     surf(score2)
     xlabel("batt")
     ylabel("fan")
     zlabel("payload capacity * flt time")
     
-    twr_vals = clearZeros(twr_vals);
-
-    %figure()
     subplot(2,3,3)
     surf(twr_vals)
     xlabel("batt")
     ylabel("fan")
     zlabel("prop stack twr")
-    
-    payload_vals = clearZeros(payload_vals);
 
-    %figure()
     subplot(2,3,4)
     surf(payload_vals)
     xlabel("batt")
     ylabel("fan")
     zlabel("payload capacity (g)")
-    
-    flt_time_vals = clearZeros(flt_time_vals);
 
-    %figure()
     subplot(2,3,5)
     surf(flt_time_vals)
     xlabel("batt")
