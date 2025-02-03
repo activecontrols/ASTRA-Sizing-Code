@@ -21,11 +21,11 @@ dual_edf_vals = data_file(:,{'Mass_g__2','Amps_1','Thrust_g__1','Voltage_2'});
 dual_edf_vals = dual_edf_vals{:,:};
 
 % Run Visualizer
-calcVals(propeller_vals,batt_vals)
-calcVals(single_edf_vals,batt_vals)
-calcVals(dual_edf_vals,batt_vals)
+calcVals(propeller_vals,batt_vals,'Propeller')
+calcVals(single_edf_vals,batt_vals,'Single EDF')
+calcVals(dual_edf_vals,batt_vals,'Dual EDF')
 
-function calcVals(propulsion,batt)
+function calcVals(propulsion,batt,Prop_name_type)
     % Settings
     twr_target = 1.7/1.6; % TWR, currently set to gyruruereee's for testing purposes
     batt_margin = 0.2; % Percentage battery charge to leave in reserve
@@ -72,32 +72,32 @@ function calcVals(propulsion,batt)
         end
     end
 
-    figure()
-    subplot(2,3,1)
-    surf(score)
-    xlabel("batt")
-    ylabel("fan")
-    zlabel("twr * flt time")
+    figure('Name',Prop_name_type,'NumberTitle','off')
+    % subplot(2,3,1)
+    % surf(score)
+    % xlabel("batt")
+    % ylabel("fan")
+    % zlabel("twr * flt time")
+    % 
+    % subplot(2,3,2)
+    % surf(score2)
+    % xlabel("batt")
+    % ylabel("fan")
+    % zlabel("payload capacity * flt time")
     
-    subplot(2,3,2)
-    surf(score2)
-    xlabel("batt")
-    ylabel("fan")
-    zlabel("payload capacity * flt time")
-    
-    subplot(2,3,3)
+    subplot(1,3,1)
     surf(twr_vals)
     xlabel("batt")
     ylabel("fan")
     zlabel("prop stack twr")
 
-    subplot(2,3,4)
+    subplot(1,3,2)
     surf(payload_vals)
     xlabel("batt")
     ylabel("fan")
     zlabel("payload capacity (g)")
 
-    subplot(2,3,5)
+    subplot(1,3,3)
     surf(flt_time_vals)
     xlabel("batt")
     ylabel("fan")
